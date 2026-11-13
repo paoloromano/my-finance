@@ -1,0 +1,28 @@
+
+# File di sistema
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Dipendenze e build (se aggiunte in futuro)
+/node_modules/
+/dist/
+/build/
+
+# Log
+*.log
+npm-debug.log*
+
+# Backup e dati locali
+*.bak
+*.backup
+*.tmp
+backup/
+backups/
+*.json
