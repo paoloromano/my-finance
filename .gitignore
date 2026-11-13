@@ -1,28 +1,73 @@
+# --- Dipendenze ---
+/vendor/
+/node_modules/
 
-# File di sistema
+# --- Ambiente (mai committare segreti) ---
+.env
+.env.*
+!.env.example
+/auth.json
+
+# --- Build frontend / file pubblici generati ---
+/public/build/
+/public/hot
+/public/storage
+/public/fonts-manifest.dev.json
+
+# --- Storage e database locali ---
+/storage/*.key
+/storage/pail/
+/database/*.sqlite
+/database/*.sqlite-journal
+/database/*.sqlite-wal
+/database/*.sqlite-shm
+
+# --- Test e analisi ---
+/.phpunit.cache/
+.phpunit.result.cache
+/coverage/
+.php-cs-fixer.cache
+.php_cs.cache
+
+# --- IDE helper generati ---
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+.phpactor.json
+
+# --- Editor / IDE ---
+/.vscode/
+/.idea/
+/.fleet/
+/.nova/
+/.zed/
+/.cursor/
+/.codex/
+*.swp
+*.swo
+
+# --- Claude Code (impostazioni locali personali) ---
+/.claude/settings.local.json
+
+# --- Sistema operativo ---
 .DS_Store
 Thumbs.db
 Desktop.ini
 
-# Editor
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Dipendenze e build (se aggiunte in futuro)
-/node_modules/
-/dist/
-/build/
-
-# Log
+# --- Log ---
 *.log
 npm-debug.log*
+yarn-error.log
 
-# Backup e dati locali
+# --- Homestead / Vagrant ---
+Homestead.json
+Homestead.yaml
+/.vagrant/
+
+# --- Backup e dati esportati ---
 *.bak
 *.backup
 *.tmp
-backup/
-backups/
-*.json
+/backup/
+/backups/
+my-business-backup*.json

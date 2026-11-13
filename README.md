@@ -1,32 +1,62 @@
-# MyBusiness
+# MyFinance
 
-Dashboard locale per la gestione delle finanze professionali, personali e familiari.
+Dashboard per la gestione delle finanze professionali, personali e familiari.
+Laravel 13 + Tailwind CSS 4 (Vite), database SQLite.
 
-## Avvio rapido su Windows
+URL di sviluppo: **http://my-finance.test** (Laravel Herd, cartella `wwwpaolo` parcheggiata).
 
-1. Estrai la cartella `my-business` in `C:\Users\utente\Documents\wwwpaolo\`.
-2. Apri la cartella `my-business`.
-3. Fai doppio clic su `index.html` oppure aprilo con Chrome/Edge.
+## Sezioni
 
-Non serve installare Node.js, database o dipendenze. La prima apertura funziona offline, tranne il font esterno (con fallback locale).
+| Sezione | URL | Cosa fa |
+|---|---|---|
+| Panoramica | `/` | Indicatori su ricavi, accantonamento, margine; bilancio familiare; prossime scadenze; ultimi movimenti |
+| Entrate lavoro | `/entrate-lavoro` | Data entry dei redditi da lavoro (P.IVA, dipendente, collaborazioni, occasionali, altro) con ritenute, filtri e totali |
+| Partita IVA | `/partita-iva` | Parametri: ricavi medi per committente, aliquota di accantonamento, trasferimento personale, fondo fiscale |
+| Movimenti | `/movimenti` | Registro entrate/uscite per area (P.IVA, personale, famiglia, fisco) |
+| Famiglia | `/famiglia` | Entrate del conto comune e voci di spesa mensili |
+| Scadenze | `/scadenze` | Rate e scadenze, con segna come pagata |
+| Impostazioni | `/impostazioni` | Backup JSON (esporta/importa) e ripristino dei dati iniziali |
 
-## Funzioni incluse
+L'importazione accetta anche il file `my-business-backup.json` esportato dalla vecchia versione JS (localStorage).
 
-- Dashboard con indicatori di ricavi, fondo fiscale e margine teorico.
-- Gestione parametri PS Company, Abifin, Visiospot, percentuale fiscale e trasferimento personale.
-- Registro di entrate e uscite.
-- Budget familiare modificabile.
-- Scadenze F24 personali inserite sulla base dei dati condivisi.
-- Esportazione/importazione backup JSON.
-- Persistenza locale tramite `localStorage`.
+## Accesso
+
+Nessuna registrazione pubblica. Un solo utente amministratore, creato da terminale:
+
+```bash
+php artisan app:create-admin
+```
+
+Rilanciato con la stessa email aggiorna la password.
+
+## Setup da zero
+
+```bash
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed      # crea tabelle e carica parametri/scadenze/budget iniziali
+php artisan app:create-admin
+npm run build                   # oppure: npm run dev durante lo sviluppo
+```
+
+## Sviluppo
+
+- `npm run dev` — Vite con hot reload (necessario per vedere subito le modifiche a classi Tailwind / CSS / JS)
+- `npm run build` — build di produzione in `public/build` (non versionata)
+- `php artisan test` — test
+
+## File principali
+
+- `app/Http/Controllers/` — un controller per sezione
+- `app/Models/` — `Income`, `Movement`, `Deadline`, `FamilyExpense`, `Setting`
+- `app/Support/FinanceDefaults.php` — valori iniziali
+- `app/Support/FinanceSummary.php` — calcoli (ricavi, accantonamento, margini)
+- `app/Services/FinanceBackup.php` — esporta / importa / ripristina
+- `resources/views/` — layout, componenti (`components/`), pagine
+- `resources/css/app.css` — Tailwind e classi base (`card`, `btn`, `input`…)
 
 ## Importante
 
-I dati vengono conservati nel browser del dispositivo. Esporta periodicamente un backup dalla sezione Impostazioni. L'app non si collega a banche o servizi fiscali e non calcola il debito fiscale definitivo. Le percentuali e le scadenze sono strumenti di pianificazione da verificare con il commercialista.
-
-## Struttura
-
-- `index.html` — pagina principale
-- `styles.css` — interfaccia e layout responsive
-- `src/app.js` — logica, dati iniziali e persistenza
-- `README.md` — istruzioni
+Le simulazioni non sono una liquidazione fiscale; verificare saldo e acconti con il commercialista.
